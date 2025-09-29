@@ -1,14 +1,25 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Facial | Reconhecimento Facial com FaceAPI</title>
-    <link rel="stylesheet" href="./css/index.css">
-</head>
-<body>
-    
-    
+    <link rel="stylesheet" href="./css/index.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>🎥 Sistema de Reconhecimento Facial</h1>
+
+      <video id="video" autoplay playsinline></video>
+
+      <div>
+        <button id="startBtn">▶️ Iniciar Câmera</button>
+        <button id="stopBtn">⏹️ Parar Câmera</button>
+      </div>
+
+      <p id="status">Clique no botão para iniciar a câmera</p>
+    </div>
+
     <script src="./js/index.js"></script>
-</body>
+  </body>
 </html>
