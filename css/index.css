@@ -1,4 +1,4 @@
- * {
+* {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -21,6 +21,8 @@
             border-radius: 15px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.3);
             text-align: center;
+            max-width: 800px;
+            width: 100%;
         }
 
         h1 {
@@ -70,4 +72,290 @@
             margin-top: 15px;
             font-size: 16px;
             color: #666;
+        }
+
+        #captureBtn {
+            background: #2196F3;
+            display: none;
+        }
+
+        #captureBtn:hover {
+            background: #1976D2;
+        }
+
+        #photoContainer {
+            margin-top: 20px;
+            padding: 20px;
+            border: 2px dashed #ddd;
+            border-radius: 10px;
+            background: #f9f9f9;
+        }
+
+        #capturedPhoto {
+            max-width: 100%;
+            max-height: 400px;
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+
+        #results {
+            margin-top: 15px;
+            padding: 15px;
+            background: #e8f5e8;
+            border-radius: 8px;
+            text-align: left;
+        }
+
+        .face-result {
+            margin: 10px 0;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+            border-left: 4px solid #4CAF50;
+        }
+
+        .no-face {
+            color: #f44336;
+            font-weight: bold;
+        }
+
+        .face-detected {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+
+        .recognition-match {
+            color: #2196F3;
+            font-weight: bold;
+        }
+
+        .recognition-unknown {
+            color: #FF9800;
+            font-weight: bold;
+        }
+
+        .loading {
+            display: inline-block;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+              0% { transform: rotate(0deg); }
+              100% { transform: rotate(360deg); }
+          }
+
+        #referenceControls {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f0f8ff;
+            border-radius: 8px;
+            border: 2px dashed #2196F3;
+        }
+
+        #personName {
+            padding: 10px;
+            margin: 5px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            width: 200px;
+        }
+
+        #personName:focus {
+            border-color: #2196F3;
+            outline: none;
+        }
+
+        #saveReferenceBtn {
+            background: #FF9800;
+            margin: 5px;
+        }
+
+        #saveReferenceBtn:hover {
+            background: #F57C00;
+        }
+
+        /* Estilos para o guia de enquadramento do rosto */
+        .face-guide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            display: none; /* Inicialmente escondido */
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Mostrar apenas quando a câmera estiver ativa */
+        #video.active ~ .face-guide {
+            display: flex;
+        }
+
+        .guide-oval {
+            width: 200px;
+            height: 250px;
+            border: 3px solid #4CAF50;
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(76, 175, 80, 0.5);
+            animation: pulse 2s infinite;
+            transition: all 0.3s ease;
+        }
+
+        /* Estados do oval baseado na detecção */
+        .guide-oval.face-detected {
+            border-color: #4CAF50;
+            box-shadow: 0 0 25px rgba(76, 175, 80, 0.8);
+        }
+
+        .guide-oval.face-too-close {
+            border-color: #FF9800;
+            box-shadow: 0 0 25px rgba(255, 152, 0, 0.8);
+        }
+
+        .guide-oval.face-too-far {
+            border-color: #2196F3;
+            box-shadow: 0 0 25px rgba(33, 150, 243, 0.8);
+        }
+
+        .guide-oval.face-not-centered {
+            border-color: #FFC107;
+            box-shadow: 0 0 25px rgba(255, 193, 7, 0.8);
+        }
+
+        .guide-oval.ready-to-capture {
+            border-color: #00E676;
+            box-shadow: 0 0 30px rgba(0, 230, 118, 1);
+            animation: pulse-ready 1s infinite;
+        }
+
+        .guide-text {
+            color: #00ff00;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.6);
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid #00ff00;
+            transition: all 0.3s ease;
+        }
+
+        .guide-status {
+            margin-top: 10px;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            text-align: center;
+            min-height: 20px;
+        }
+
+        .guide-countdown {
+            margin-top: 15px;
+            color: #00E676;
+            font-size: 48px;
+            font-weight: bold;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.9);
+            text-align: center;
+            animation: countdown-pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                border-color: #00ff00;
+                box-shadow: 
+                    0 0 0 2000px rgba(0, 0, 0, 0.3),
+                    inset 0 0 20px rgba(0, 255, 0, 0.3);
+            }
+            50% {
+                border-color: #00cc00;
+                box-shadow: 
+                    0 0 0 2000px rgba(0, 0, 0, 0.4),
+                    inset 0 0 30px rgba(0, 255, 0, 0.5);
+            }
+            100% {
+                border-color: #00ff00;
+                box-shadow: 
+                    0 0 0 2000px rgba(0, 0, 0, 0.3),
+                    inset 0 0 20px rgba(0, 255, 0, 0.3);
+            }
+        }
+
+        @keyframes pulse-ready {
+            0% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.9; }
+        }
+
+        @keyframes countdown-pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        /* Esconder o guia quando não estiver usando a câmera */
+        .face-guide.hidden {
+            display: none !important;
+        }
+
+        /* ============================================ */
+        /* ESTILOS PARA O BOTÃO DE MATCH */
+        /* ============================================ */
+
+        #matchBtn {
+             background: linear-gradient(135deg, #4CAF50, #45a049);
+             color: white;
+             border: none;
+             padding: 12px 24px;
+             font-size: 16px;
+             font-weight: bold;
+             border-radius: 25px;
+             cursor: pointer;
+             margin: 15px 0;
+             box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+             transition: all 0.3s ease;
+             display: block; /* Sempre visível inicialmente */
+             text-transform: uppercase;
+             letter-spacing: 1px;
+         }
+
+        #matchBtn:hover {
+            background: linear-gradient(135deg, #45a049, #4CAF50);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+        }
+
+        #matchBtn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 10px rgba(76, 175, 80, 0.3);
+        }
+
+        #matchInfo {
+            background: linear-gradient(135deg, #2196F3, #1976D2);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 15px;
+            margin: 15px 0;
+            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+            display: none; /* Inicialmente escondido */
+            text-align: center;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        #matchInfo h3 {
+            margin: 0 0 10px 0;
+            font-size: 18px;
+            color: #E3F2FD;
+        }
+
+        #matchDate {
+            font-size: 20px;
+            font-weight: bold;
+            color: #FFFFFF;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+            margin: 0;
         }

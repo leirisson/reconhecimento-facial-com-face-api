@@ -10,16 +10,47 @@
     <div class="container">
       <h1>🎥 Sistema de Reconhecimento Facial</h1>
 
-      <video id="video" autoplay playsinline></video>
-
-      <div>
-        <button id="startBtn">▶️ Iniciar Câmera</button>
-        <button id="stopBtn">⏹️ Parar Câmera</button>
+      <div id="videoContainer" style="position: relative; display: inline-block;">
+        <video id="video" autoplay playsinline></video>
+        <div id="faceGuide" class="face-guide">
+          <div class="guide-oval" id="guideOval"></div>
+          <div class="guide-text" id="guideText">Posicione seu rosto aqui</div>
+          <div class="guide-status" id="guideStatus"></div>
+          <div class="guide-countdown" id="guideCountdown" style="display: none;"></div>
+        </div>
       </div>
 
-      <p id="status">Clique no botão para iniciar a câmera</p>
+      <div>
+        <button id="matchBtn">✅ Registrar Match</button>
+        <button id="startBtn" style="display: none;">▶️ Iniciar Câmera</button>
+        <button id="stopBtn" style="display: none;">⏹️ Parar Câmera</button>
+        <button id="captureBtn" style="display: none;">📸 Capturar Foto</button>
+      </div>
+
+      <div id="matchInfo" style="display: none; margin: 20px 0; padding: 15px; background: #e8f5e8; border: 2px solid #4CAF50; border-radius: 10px;">
+        <h3 style="margin: 0 0 10px 0; color: #2e7d32;">🎯 Match Registrado!</h3>
+        <p id="matchDate" style="margin: 0; font-weight: bold; color: #1b5e20;"></p>
+      </div>
+
+      <canvas id="canvas" style="display: none;"></canvas>
+      
+      <div id="photoContainer" style="display: none;">
+        <h3>📷 Foto Capturada</h3>
+        <div id="imageContainer" style="position: relative; display: inline-block;">
+          <img id="capturedPhoto" alt="Foto capturada" />
+          <canvas id="faceCanvas" style="position: absolute; top: 0; left: 0; pointer-events: none;"></canvas>
+        </div>
+        <div id="results"></div>
+        <div id="referenceControls" style="display: none;">
+          <input type="text" id="personName" placeholder="Nome da pessoa" maxlength="20" />
+          <button id="saveReferenceBtn">💾 Salvar como Referência</button>
+        </div>
+      </div>
+
+      <p id="status">Clique em 'Registrar Match' para iniciar o processo de reconhecimento facial</p>
     </div>
 
+    <script src="./lib/face-api.min.js"></script>
     <script src="./js/index.js"></script>
   </body>
 </html>
